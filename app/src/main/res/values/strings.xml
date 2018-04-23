@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Downtime</string>
+    <string name="DebagButton">Debagger</string>
+    <string name="BFButton">Box Former</string>
+    <string name="FillerButton">Filler</string>
+    <string name="CPButton">Case Packer</string>
+    <string name="RunningSwitch">Running</string>
+    <string name="BlockedSwitch">Blocked</string>
+    <string name="StarvedSwitch">Starved</string>
+</resources>
