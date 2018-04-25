@@ -1,14 +1,16 @@
 package com.example.kdn00.downtime;
 
+import android.Manifest;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,19 +20,17 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity{
     ToggleButton dbR,dbS,dbB,dbI;
-    ToggleButton startButton;
+    Button completeButton;
     TextView textView;
-    EditText testOutput;
     long startTime = 0;
-    long duration = 0;
+    double duration = 0;
     long runTime;
     String dbActive = "";
     StringBuilder sb = new StringBuilder();
     Date now = new Date();
-
+    generateNoteOnSD body = new generateNoteOnSD();
 
     String name = new SimpleDateFormat("HHmmss").format(now);
-    FileWriter output;
 
 
 
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startButton = findViewById(R.id.startButton);
+        completeButton = findViewById(R.id.completeButton);
         dbR = findViewById(R.id.dbR);
         dbB = findViewById(R.id.dbB);
         dbS = findViewById(R.id.dbS);
@@ -47,16 +47,12 @@ public class MainActivity extends AppCompatActivity{
 
 
         textView = findViewById(R.id.UpTime);
-        testOutput = findViewById(R.id.testOutput);
 
-        startButton.setOnClickListener(new View.OnClickListener() {
+
+        completeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    output.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                body.generateNoteOnSD(sb.toString());
             }
         });
 
@@ -68,20 +64,18 @@ public class MainActivity extends AppCompatActivity{
                 dbB.setChecked(false);
                 now = new Date();
                 name = new SimpleDateFormat("HHmmss").format(now);
+                sb.append("Debagger,");
                 sb.append(name);
+                sb.append(",");
                 sb.append(dbActive);
                 sb.append(",");
-                sb.append((System.nanoTime() - startTime)/1000000000.0);
+                duration = (System.nanoTime() - startTime)/1000000000.0;
+                sb.append(duration+"");
                 sb.append("\n");
-                testOutput.setText(sb);
                 startTime = System.nanoTime();
                 dbActive = "Running";
-                try {
-                    output = new FileWriter("test.csv");
-                    output.write(sb.toString());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+
             }
         });
 
@@ -97,12 +91,14 @@ public class MainActivity extends AppCompatActivity{
                 dbS.setChecked(false);
                 now = new Date();
                 name = new SimpleDateFormat("HHmmss").format(now);
+                sb.append("Debagger,");
                 sb.append(name);
+                sb.append(",");
                 sb.append(dbActive);
                 sb.append(",");
-                sb.append((System.nanoTime() - startTime)/1000000000.0);
+                duration = (System.nanoTime() - startTime)/1000000000.0;
+                sb.append(duration+"");
                 sb.append("\n");
-                testOutput.setText(sb);
                 startTime = System.nanoTime();
                 dbActive = "Blocked";
             }
@@ -120,12 +116,14 @@ public class MainActivity extends AppCompatActivity{
                 dbB.setChecked(false);
                 now = new Date();
                 name = new SimpleDateFormat("HHmmss").format(now);
+                sb.append("Debagger,");
                 sb.append(name);
+                sb.append(",");
                 sb.append(dbActive);
                 sb.append(",");
-                sb.append((System.nanoTime() - startTime)/1000000000.0);
+                duration = (System.nanoTime() - startTime)/1000000000.0;
+                sb.append(duration+"");
                 sb.append("\n");
-                testOutput.setText(sb);
                 startTime = System.nanoTime();
                 dbActive = "Starved";
             }
@@ -143,12 +141,14 @@ public class MainActivity extends AppCompatActivity{
                 dbB.setChecked(false);
                 now = new Date();
                 name = new SimpleDateFormat("HHmmss").format(now);
+                sb.append("Debagger,");
                 sb.append(name);
+                sb.append(",");
                 sb.append(dbActive);
                 sb.append(",");
-                sb.append((System.nanoTime() - startTime)/1000000000.0);
+                duration = (System.nanoTime() - startTime)/1000000000.0;
+                sb.append(duration+"");
                 sb.append("\n");
-                testOutput.setText(sb);
                 startTime = System.nanoTime();
                 dbActive = "Issue";
 
