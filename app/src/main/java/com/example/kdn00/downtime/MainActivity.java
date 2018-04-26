@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity{
     generateNoteOnSD body = new generateNoteOnSD();
     String name = new SimpleDateFormat("HHmmss").format(now);
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
